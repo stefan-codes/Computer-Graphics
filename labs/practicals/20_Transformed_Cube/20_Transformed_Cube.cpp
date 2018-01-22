@@ -10,6 +10,7 @@ effect eff;
 target_camera cam;
 float theta = 0.0f;
 float rho = 0.0f;
+float ytho = 0.0f;
 vec3 pos(0.0f, 0.0f, 0.0f);
 float s = 1.0f;
 
@@ -19,23 +20,29 @@ bool load_content() {
   vector<vec3> positions{
       // *********************************
       // Add the position data for triangles here, (6 verts per side)
-      // Front
+	  // Front
+	  vec3(0,0,0), vec3(1,0,0), vec3(0,1,0),
+	  vec3(0,1,0), vec3(1,0,0), vec3(1,1,0),
 
+	  // Back
+	  vec3(0,0,1), vec3(0,1,1), vec3(1,0,1),
+	  vec3(1,0,1), vec3(0,1,1), vec3(1,1,1),
 
-      // Back
+	  // Right
+	  vec3(1,0,0), vec3(1,0,1), vec3(1,1,0),
+	  vec3(1,1,0), vec3(1,0,1), vec3(1,1,1),
 
+	  // Left
+	  vec3(0,0,0), vec3(0,1,0), vec3(0,0,1),
+	  vec3(0,0,1), vec3(0,1,0), vec3(0,1,1),
 
-      // Right
+	  // Top
+	  vec3(0,1,0), vec3(1,1,0), vec3(1,1,1),
+	  vec3(1,1,1), vec3(0,1,1), vec3(0,1,0),
 
-
-      // Left
-
-
-      // Top
-
-
-      // Bottom
-
+	  // Bottom
+	  vec3(0,0,0), vec3(0,0,1), vec3(1,0,0),
+	  vec3(1,0,0), vec3(0,0,1), vec3(1,0,1)
 
       // *********************************
   };
@@ -66,35 +73,48 @@ bool update(float delta_time) {
   // *********************************
   // Use keys to update transform values
   // WSAD - movement
-  // Arrow Keys - rotation
+	if (glfwGetKey(renderer::get_window(), GLFW_KEY_W)) {
+		pos.y += pi<float>() * delta_time;
+	}
+	if (glfwGetKey(renderer::get_window(), GLFW_KEY_S)) {
+		pos.y -= pi<float>() * delta_time;
+	}
+	if (glfwGetKey(renderer::get_window(), GLFW_KEY_A)) {
+		pos.x -= pi<float>() * delta_time;
+	}
+	if (glfwGetKey(renderer::get_window(), GLFW_KEY_D)) {
+		pos.x += pi<float>() * delta_time;
+	}
+
   // O decrease scale, P increase scale
 
+	if (glfwGetKey(renderer::get_window(), GLFW_KEY_O)) {
+		s -= pi<float>() * delta_time;
+	}
 
+	if (glfwGetKey(renderer::get_window(), GLFW_KEY_P)) {
+		s += pi<float>() * delta_time;
+	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  // Arrow Keys - rotation
+	if (glfwGetKey(renderer::get_window(), GLFW_KEY_UP)) {
+		theta -= pi<float>() * delta_time;
+	}
+	if (glfwGetKey(renderer::get_window(), GLFW_KEY_DOWN)) {
+		theta += pi<float>() * delta_time;
+	}
+	if (glfwGetKey(renderer::get_window(), GLFW_KEY_RIGHT)) {
+		rho -= pi<float>() * delta_time;
+	}
+	if (glfwGetKey(renderer::get_window(), GLFW_KEY_LEFT)) {
+		rho += pi<float>() * delta_time;
+	}
+	if (glfwGetKey(renderer::get_window(), GLFW_KEY_H)) {
+		ytho -= pi<float>() * delta_time;
+	}
+	if (glfwGetKey(renderer::get_window(), GLFW_KEY_J)) {
+		ytho += pi<float>() * delta_time;
+	}
 
 
 
@@ -110,9 +130,10 @@ bool render() {
   mat4 T, R, S, M;
   // *********************************
   // Create transformation matrix
-
-
-
+  T = translate(mat4(1.0f), pos);
+  R = eulerAngleXYZ(theta, ytho, rho);
+  S = scale(mat4(1.0f), vec3(s, s, s));
+  M = T*(R*S);
 
   // *********************************
   // Create MVP matrix

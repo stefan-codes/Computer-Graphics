@@ -20,11 +20,20 @@ void triangle(const vector<vec3> &points, vector<vec3> &positions, vector<vec4> 
 
 void divide_triangle(const vector<vec3> &points, unsigned int count, vector<vec3> &positions, vector<vec4> &colours) {
   // *********************************
-  // IF we have more divisions to do?
 
-    // Calculate new vertices to work on
+	triangle(points, positions, colours);
+	if (count > 0) {
+		divide_triangle(points, count - 1, positions, colours);
+		vec3 vort1 = (points[0] + points[1]) / 2.0f;
+		vec3 vort2 = (points[1] + points[2]) / 2.0f;
+		vec3 vort3 = (points[2] + points[0]) / 2.0f;
 
-    // Divide new triangles
+		points.clear;
+		points.insert(points.end(), vort1);
+		
+		}
+	}
+    
 
 
 

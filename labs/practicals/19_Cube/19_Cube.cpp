@@ -18,29 +18,47 @@ bool load_content() {
       // *********************************
       // Add the position data for triangles here, (6 verts per side)
       // Front
-
+	  vec3(0,0,0), vec3(1,0,0), vec3(0,1,0),
+	  vec3(0,1,0), vec3(1,0,0), vec3(1,1,0),
 
       // Back
-
+	  vec3(0,0,1), vec3(0,1,1), vec3(1,0,1),
+	  vec3(1,0,1), vec3(0,1,1), vec3(1,1,1),
 
       // Right
-
+	  vec3(1,0,0), vec3(1,0,1), vec3(1,1,0),
+	  vec3(1,1,0), vec3(1,0,1), vec3(1,1,1),
 
       // Left
-
+	  vec3(0,0,0), vec3(0,1,0), vec3(0,0,1),
+	  vec3(0,0,1), vec3(0,1,0), vec3(0,1,1),
 
       // Top
-
+	  vec3(0,1,0), vec3(1,1,0), vec3(1,1,1),
+	  vec3(1,1,1), vec3(0,1,1), vec3(0,1,0),
 
       // Bottom
-
+	  vec3(0,0,0), vec3(0,0,1), vec3(1,0,0),
+	  vec3(1,0,0), vec3(0,0,1), vec3(1,0,1)
 
       // *********************************
   };
   // Colours
   vector<vec4> colours;
+  int j = 0;
+  float color = 0.15f;
   for (auto i = 0; i < positions.size(); ++i) {
-    colours.push_back(vec4(1.0, i % 2, 0.0f, 1.0f)); // Notice how I got those Rad colours?
+    //colours.push_back(vec4(1.0, i % 2, 0.0f, 1.0f)); // Notice how I got those Rad colours?
+	  
+	  
+	  if (j > 5) {
+		  j = 0;
+		  color = color + 0.15f;
+
+	  }
+
+	  colours.push_back(vec4(0, color, 0, 1.0f));
+	  j++;
   }
   // Add to the geometry
   geom.add_buffer(positions, BUFFER_INDEXES::POSITION_BUFFER);
@@ -57,6 +75,8 @@ bool load_content() {
   cam.set_target(vec3(0.0f, 0.0f, 0.0f));
   auto aspect = static_cast<float>(renderer::get_screen_width()) / static_cast<float>(renderer::get_screen_height());
   cam.set_projection(quarter_pi<float>(), aspect, 2.414f, 1000.0f);
+
+  //glDisable(GL_DEPTH_TEST); //No idea!
   return true;
 }
 
