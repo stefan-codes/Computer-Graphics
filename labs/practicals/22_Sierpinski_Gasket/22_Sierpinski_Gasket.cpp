@@ -19,21 +19,38 @@ void triangle(const vector<vec3> &points, vector<vec3> &positions, vector<vec4> 
 }
 
 void divide_triangle(const vector<vec3> &points, unsigned int count, vector<vec3> &positions, vector<vec4> &colours) {
-  // *********************************
-
-	triangle(points, positions, colours);
+	// *********************************
 	if (count > 0) {
-		divide_triangle(points, count - 1, positions, colours);
-		vec3 vort1 = (points[0] + points[1]) / 2.0f;
-		vec3 vort2 = (points[1] + points[2]) / 2.0f;
-		vec3 vort3 = (points[2] + points[0]) / 2.0f;
+		vector<vec3> asd;
 
-		points.clear;
-		points.insert(points.end(), vort1);
-		
-		}
+		vec3 vort0 = (points[0] + points[1]) / 2.0f;
+		vec3 vort1 = (points[1] + points[2]) / 2.0f;
+		vec3 vort2 = (points[2] + points[0]) / 2.0f;
+
+		asd.push_back(points[0]);
+		asd.push_back(vort0);
+		asd.push_back(vort2);
+
+		divide_triangle(asd, count-1, positions, colours);
+		asd.clear();
+
+		asd.push_back(vort0);
+		asd.push_back(points[1]);
+		asd.push_back(vort1);
+
+		divide_triangle(asd, count - 1, positions, colours);
+		asd.clear();
+
+		asd.push_back(vort1);
+		asd.push_back(points[2]);
+		asd.push_back(vort2);
+
+		divide_triangle(asd, count - 1, positions, colours);
+		asd.clear();
 	}
-    
+	else {
+		triangle(points, positions, colours);
+	}
 
 
 
@@ -41,7 +58,9 @@ void divide_triangle(const vector<vec3> &points, unsigned int count, vector<vec3
 
 
 
-  // *********************************
+
+
+	// *********************************
 }
 
 bool load_content() {
