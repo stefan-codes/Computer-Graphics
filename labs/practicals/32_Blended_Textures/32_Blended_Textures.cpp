@@ -38,7 +38,7 @@ bool load_content() {
 
   // Build effect
   eff.build();
-
+     
   // Load main two textures
   texs[0] = texture("textures/grass.jpg");
   texs[1] = texture("textures/stonygrass.jpg");
@@ -76,8 +76,10 @@ bool render() {
 
   // *********************************
   // Bind the three textures - use different index for each
-
-
+  renderer::bind(texs[0], 0);
+  renderer::bind(texs[1], 1);
+  renderer::bind(blend_map, 2);  
+       
 
   // *********************************
 

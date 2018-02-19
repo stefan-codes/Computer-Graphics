@@ -49,7 +49,7 @@ bool load_content() {
   // ******************************
   texs[0] = texture("textures/checker.png", false, false);
   texs[1] = texture("textures/checker.png", false, true);
-  texs[2] = texture("textures/checker.png", true, true);
+  texs[2] = texture("textures/checker.png", true, false);
   texs[3] = texture("textures/checker.png", true, true);
 
   // Set camera properties
@@ -63,7 +63,7 @@ bool load_content() {
 
 bool update(float delta_time) {
   // Move camera, notice the slightly altered technique
-  vec3 dir;
+	vec3 dir = vec3(0.0);
   if (glfwGetKey(renderer::get_window(), GLFW_KEY_UP)) {
     dir += vec3(0.0f, 10.0f, 0.0f);
   }
