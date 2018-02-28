@@ -16,42 +16,52 @@ bool load_content() {
 
   // *********************************
   // box
-
+  meshes["cube"] = mesh(geometry_builder::create_box());
   // Tetrahedron
-
+  meshes["tetrahedron"] = mesh(geometry_builder::create_tetrahedron());
   // Pyramid
-
+  meshes["pyramid"] = mesh(geometry_builder::create_pyramid());
   // Disk
-
+  meshes["disk"] = mesh(geometry_builder::create_disk(20));
   // Cylinder
-
+  meshes["cylinder"] = mesh(geometry_builder::create_cylinder(20, 20)); //stack, slices
   // Sphere
-
+  meshes["sphere"] = mesh(geometry_builder::create_sphere(20, 20));
   // Torus
+  meshes["torus"] = mesh(geometry_builder::create_torus(20, 20, 1, 5));
 
 
   // Set the transforms for your meshes here
   // 5x scale, move(-10.0f, 2.5f, -30.0f)
+  auto m = meshes["cube"];
+  m.get_transform().scale = vec3(5, 5, 5);
+  m.get_transform().translate(vec3(-10, 2.5f, -30));
 
 
   // 4x scale, move(-30.0f, 10.0f, -10.0f)
-
+  meshes["tetrahedron"].get_transform().scale = vec3(4,4,4);
+  meshes["tetrahedron"].get_transform().translate(vec3(-30, 10, -10));
 
   // 5x scale, move(-10.0f, 7.5f, -30.0f)
-
+  meshes["pyramid"].get_transform().scale = vec3(5, 5, 5);
+  meshes["pyramid"].get_transform().translate(vec3(-10, 7.5f, -30));
 
   // scale(3.0f, 1.0f, 3.0f), move(-10.0f, 11.5f, -30.0f), 180 rotate X axis
-
+  meshes["disk"].get_transform().scale = vec3(3, 1, 3);
+  meshes["disk"].get_transform().translate(vec3(-10, 11.5f, -30));
 
 
   // 5x scale, move(-25.0f, 2.5f, -25.0f)
-
+  meshes["cylinder"].get_transform().scale = vec3(5, 5, 5);
+  meshes["cylinder"].get_transform().translate(vec3(-25, 2.5f, -25));
 
   // 2.5x scale, move(-25.0f, 10.0f, -25.0f)
-
+  meshes["sphere"].get_transform().scale = vec3(2.5f, 2.5f, 2.5f);
+  meshes[""].get_transform().translate(vec3(-25, 10, -25));
 
   // 180 rotate X axis, move(-25.0f, 10.0f, -25.0f)
-
+  meshes["torus"].get_transform().rotate(vec3(90,0,0));
+  meshes["torus"].get_transform().translate(vec3(-25, 10, -25));
 
   // *********************************
 
@@ -94,9 +104,9 @@ bool render() {
 
     // *********************************
     // Bind texture to renderer
-
+	renderer::bind(tex, 0);
     // Set the texture value for the shader here
-
+	glUniform1i(eff.get_uniform_location("tex"), 0);
     // *********************************
     // Render mesh
     renderer::render(m);
