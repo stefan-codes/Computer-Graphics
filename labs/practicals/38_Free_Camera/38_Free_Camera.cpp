@@ -15,9 +15,9 @@ double cursor_y = 0.0;
 bool initialise() {
   // *********************************
   // Set input mode - hide the cursor
-
+	glfwSetInputMode(renderer::get_window(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
   // Capture initial mouse position
-
+	glfwGetCursorPos(renderer::get_window(), &cursor_x, &cursor_y);
   // *********************************
   return true;
 }
@@ -81,26 +81,45 @@ bool update(float delta_time) {
   double current_y;
   // *********************************
   // Get the current cursor position
-
+  glfwGetCursorPos(renderer::get_window(), &current_x, &current_y);
   // Calculate delta of cursor positions from last frame
-
+  double delta_x = current_x - cursor_x;
+  double delta_y = current_y - cursor_y;
 
   // Multiply deltas by ratios - gets actual change in orientation
-
-
+  delta_x = delta_x * ratio_width;
+  delta_y = delta_y * ratio_height;
   // Rotate cameras by delta
+  cam.rotate(delta_x, -delta_y);
   // delta_y - x-axis rotation
   // delta_x - y-axis rotation
-
   // Use keyboard to move the camera - WSAD
+  if (glfwGetKey(renderer::get_window(), GLFW_KEY_W)) {
+	  cam.move(vec3(delta_x, -delta_y, 0.1));
+  }
+
+  if (glfwGetKey(renderer::get_window(), GLFW_KEY_S)) {
+	  cam.move(vec3(delta_x, -delta_y, -0.1));
+  }
+
+  if (glfwGetKey(renderer::get_window(), GLFW_KEY_A)) {
+	  cam.move(vec3(delta_x, -delta_y, 0)+vec3(-0.1,0,0));
+  }
+
+  if (glfwGetKey(renderer::get_window(), GLFW_KEY_D)) {
+	  cam.move(vec3(delta_x,-delta_y,0)+vec3(0.1,0,0));
+  }
 
 
+  // Add my own up and down
 
+  if (glfwGetKey(renderer::get_window(), GLFW_KEY_UP)) {
+	  cam.move(vec3(cam.get_up()) * vec3(0.1));
+  }
 
-
-
-
-
+  if (glfwGetKey(renderer::get_window(), GLFW_KEY_DOWN)) {
+	  cam.move(vec3(cam.get_up()) * vec3(-0.1));
+  }
 
 
 
@@ -109,10 +128,10 @@ bool update(float delta_time) {
   // Move camera
 
   // Update the camera
-
+  cam.update(delta_time);
   // Update cursor pos
-
-
+  cursor_x = current_x;
+  cursor_y = current_y;
   // *********************************
   return true;
 }

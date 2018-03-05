@@ -33,9 +33,8 @@ bool load_content() {
 
   // Set the transforms for your meshes here
   // 5x scale, move(-10.0f, 2.5f, -30.0f)
-  auto m = meshes["cube"];
-  m.get_transform().scale = vec3(5, 5, 5);
-  m.get_transform().translate(vec3(-10, 2.5f, -30));
+  meshes["cube"].get_transform().scale = vec3(5, 5, 5);
+  meshes["cube"].get_transform().translate(vec3(-10, 2.5f, -30));
 
 
   // 4x scale, move(-30.0f, 10.0f, -10.0f)
@@ -57,10 +56,10 @@ bool load_content() {
 
   // 2.5x scale, move(-25.0f, 10.0f, -25.0f)
   meshes["sphere"].get_transform().scale = vec3(2.5f, 2.5f, 2.5f);
-  meshes[""].get_transform().translate(vec3(-25, 10, -25));
+  meshes["sphere"].get_transform().translate(vec3(-25, 10, -25));
 
   // 180 rotate X axis, move(-25.0f, 10.0f, -25.0f)
-  meshes["torus"].get_transform().rotate(vec3(90,0,0));
+  meshes["torus"].get_transform().rotate(vec3(1.6,0,0));
   meshes["torus"].get_transform().translate(vec3(-25, 10, -25));
 
   // *********************************
