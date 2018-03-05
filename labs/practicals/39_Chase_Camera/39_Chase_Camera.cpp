@@ -68,7 +68,7 @@ bool load_content() {
 
   // Set camera properties
   cam.set_pos_offset(vec3(0.0f, 2.0f, 10.0f));
-  cam.set_springiness(0.02f);
+  cam.set_springiness(0.5f);
   cam.move(meshes["chaser"].get_transform().position, eulerAngles(meshes["chaser"].get_transform().orientation));
   cam.set_projection(quarter_pi<float>(), renderer::get_screen_aspect(), 0.1f, 1000.0f);
   return true;
@@ -94,8 +94,8 @@ bool update(float delta_time) {
   double delta_y = current_y - cursor_y;
 
   // Multiply deltas by ratios and delta_time - gets actual change in orientation
-  delta_x = delta_x * ratio_width *delta_time;
-  delta_y = delta_y * ratio_height *delta_time;
+  delta_x = delta_x * ratio_width *5 *delta_time;
+  delta_y = delta_y * ratio_height *5 * delta_time;
 
   // Rotate cameras by delta
   // x - delta_y
@@ -118,7 +118,10 @@ bool update(float delta_time) {
 	  vec3 camForward = cam.get_target_pos() - cam.get_position();
 	  camForward = normalize(vec3(camForward.x, 0, camForward.z));
 
-	  target_mesh.get_transform().translate(camForward * 0.1f);
+	  //target_mesh.get_transform().translate(camForward * 0.1f);
+	  //target_mesh.get_transform().translate(vec3(0,0,-1) * 5.0f *delta_time);
+	  //target_mesh.get_transform().translate(target_mesh.get_transform().translate * vec3(0, 0, -1) * 5.0f *delta_time);
+	  target_mesh.get_transform().translate(target_mesh.get_transform().orientation * vec3(0, 0, -1) *0.1f);
   }
 
   if (glfwGetKey(renderer::get_window(), GLFW_KEY_S)) {
@@ -182,7 +185,7 @@ bool render() {
     glUniform1i(eff.get_uniform_location("tex"), 0);
 
     // Render mesh
-    renderer::render(m);
+    renderer::render(m); 
   }
 
   return true;

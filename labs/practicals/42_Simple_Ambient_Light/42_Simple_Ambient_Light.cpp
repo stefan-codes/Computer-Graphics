@@ -87,10 +87,16 @@ bool render() {
     glUniformMatrix4fv(eff.get_uniform_location("MVP"), 1, GL_FALSE, value_ptr(MVP));
 
     // *********************************
+	//vec4 material_colour = {1.0f, 0.0f, 0.0f, 1.0f};
+	vec4 material_colo = vec4(1.0f, 0.0f, 0.0f, 1.0f);
+	vec4 ambient_intensity = {0.3f, 0.3f, 0.3f, 1.0f};
+
     // Set material colour - all objects red
-
+	
+	glUniform4fv(eff.get_uniform_location("ambient_intensity"), 1, value_ptr(ambient_intensity));
+	glUniform4fv(eff.get_uniform_location("material_colour"), 1, value_ptr(material_colo));
     // Set ambient intensity - (0.3, 0.3, 0.3, 1.0)
-
+	
     // *********************************
     // Render mesh
     renderer::render(m);
