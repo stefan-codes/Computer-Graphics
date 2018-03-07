@@ -93,9 +93,9 @@ bool render() {
 	glUniformMatrix4fv(eff.get_uniform_location("M"), 1, GL_FALSE, value_ptr(M));
     // Set N matrix uniform - remember - 3x3 matrix
 	auto N = m.get_transform().get_normal_matrix();
-	glUniformMatrix3fv(eff.get_uniform_location("M"), 1, GL_FALSE, value_ptr(N));
+	glUniformMatrix3fv(eff.get_uniform_location("N"), 1, GL_FALSE, value_ptr(N));
     // Set material colour - specular material is white
-	glUniform4fv(eff.get_uniform_location("material_colour"), 1, value_ptr(vec4(0.0f,0.0f,0.0f,1.0f)));
+	glUniform4fv(eff.get_uniform_location("material_colour"), 1, value_ptr(vec4(1.0f,1.0f,1.0f,1.0f)));
     // Set shininess - Use 50.0f
 	glUniform1f(eff.get_uniform_location("shininess"), 50.0f);
     // Set light colour - (1.0, 1.0, 1.0, 1.0)
@@ -110,8 +110,8 @@ bool render() {
   }
       
   return true;
-}
-
+}  
+   
 void main() {
   // Create application
   app application("45_Specular_Light");
