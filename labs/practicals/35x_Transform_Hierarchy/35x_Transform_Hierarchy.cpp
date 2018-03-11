@@ -30,7 +30,7 @@ bool load_content() {
   // Move Box Three to (0,1,0)
   meshes[2].get_transform().translate(vec3(0, 1, 0));
   // *********************************
-
+    
   // Load texture
   plane_tex = texture("textures/snow.jpg");
   textures[0] = texture("textures/check_2.png");

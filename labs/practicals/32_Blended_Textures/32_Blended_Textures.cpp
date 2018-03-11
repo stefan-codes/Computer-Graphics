@@ -41,7 +41,8 @@ bool load_content() {
      
   // Load main two textures
   texs[0] = texture("textures/grass.jpg");
-  texs[1] = texture("textures/stonygrass.jpg");
+  //texs[1] = texture("textures/blend_map1.png");
+  //texs[1] = texture("textures/stonygrass.jpg");
   // Load blend map, try both blend_map1.png and blend_map2.jpg
   blend_map = texture("textures/blend_map1.png");
 
